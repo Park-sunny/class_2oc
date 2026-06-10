@@ -1,98 +1,747 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>개인 운동 기록 대시보드</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Defense Portfolio</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+
+:root{
+    --primary:#0066ff;
+    --secondary:#f5f5f7;
+    --text:#1d1d1f;
+    --sub:#6e6e73;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--text);
+    background:#fff;
+}
+
+/* ==========================
+   NAVBAR
+========================== */
+
+.navbar-custom{
+
+    position:fixed;
+    width:100%;
+    top:0;
+
+    backdrop-filter:blur(20px);
+
+    background:rgba(255,255,255,.75);
+
+    border-bottom:1px solid rgba(0,0,0,.05);
+
+    z-index:999;
+}
+
+.navbar-brand{
+    font-weight:700;
+}
+
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+    135deg,
+    #ffffff,
+    #f5f7fa
+    );
+}
+
+.hero-label{
+
+    color:var(--primary);
+
+    letter-spacing:3px;
+
+    font-weight:600;
+
+    font-size:.9rem;
+}
+
+.hero h1{
+
+    margin-top:20px;
+
+    font-size:clamp(3rem,8vw,5.5rem);
+
+    font-weight:700;
+
+    line-height:1.1;
+
+    letter-spacing:-2px;
+}
+
+.hero p{
+
+    margin-top:20px;
+
+    color:var(--sub);
+
+    font-size:1.3rem;
+}
+
+.hero-buttons{
+
+    margin-top:40px;
+}
+
+.btn-apple{
+
+    background:var(--primary);
+
+    color:white;
+
+    border:none;
+
+    border-radius:50px;
+
+    padding:14px 28px;
+
+    text-decoration:none;
+
+    margin-right:10px;
+}
+
+.btn-apple:hover{
+    background:#0055d4;
+    color:white;
+}
+
+.btn-outline-apple{
+
+    border-radius:50px;
+
+    padding:14px 28px;
+}
+
+/* ==========================
+   SECTION
+========================== */
+
+.section{
+
+    padding:120px 0;
+}
+
+.section-title{
+
+    text-align:center;
+
+    font-size:2.5rem;
+
+    font-weight:700;
+
+    margin-bottom:60px;
+}
+
+/* ==========================
+   ABOUT
+========================== */
+
+.profile-image{
+
+    width:300px;
+    height:300px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.1);
+}
+
+.about-text{
+
+    font-size:1.1rem;
+
+    line-height:1.9;
+}
+
+/* ==========================
+   PROJECTS
+========================== */
+
+.projects{
+
+    background:#fafafa;
+}
+
+.project-card{
+
+    overflow:hidden;
+
+    border:none;
+
+    border-radius:28px;
+
+    background:white;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.08);
+
+    transition:.4s;
+}
+
+.project-card:hover{
+
+    transform:
+    translateY(-10px);
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.15);
+}
+
+.project-image{
+
+    height:250px;
+
+    object-fit:cover;
+}
+
+/* ==========================
+   RESEARCH
+========================== */
+
+.research-item{
+
+    padding:30px;
+
+    border-radius:24px;
+
+    background:white;
+
+    box-shadow:
+    0 8px 30px rgba(0,0,0,.08);
+
+    height:100%;
+}
+
+.research-item h4{
+
+    margin-bottom:15px;
+}
+
+/* ==========================
+   SKILLS
+========================== */
+
+.skill-box{
+
+    margin-bottom:30px;
+}
+
+.progress{
+
+    height:10px;
+
+    border-radius:20px;
+}
+
+/* ==========================
+   GITHUB
+========================== */
+
+.github{
+
+    background:#fafafa;
+}
+
+.github-card{
+
+    padding:50px;
+
+    border-radius:30px;
+
+    background:white;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.08);
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+
+    background:#111;
+
+    color:white;
+
+    padding:30px;
+}
+
+/* ==========================
+   SCROLL ANIMATION
+========================== */
+
+.hidden{
+
+    opacity:0;
+
+    transform:translateY(50px);
+
+    transition:all .8s ease;
+}
+
+.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+</style>
+
 </head>
-<body class="bg-gray-100 min-h-screen p-4 flex justify-center items-center">
+<body>
 
-    <!-- 로그인 화면 -->
-    <div id="login-container" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
-        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">로그인</h2>
-        <input type="text" id="id-input" placeholder="아이디" class="w-full p-3 mb-4 border rounded">
-        <input type="password" id="pw-input" placeholder="비밀번호" class="w-full p-3 mb-6 border rounded">
-        <button onclick="checkLogin()" class="w-full bg-blue-600 text-white p-3 rounded font-bold hover:bg-blue-700">로그인</button>
-        <p id="error-msg" class="text-red-500 text-sm mt-4 text-center hidden">아이디 또는 비밀번호가 틀렸습니다.</p>
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="#">
+            AI Defense Portfolio
+        </a>
+
+        <button class="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#menu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">소개</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#projects">프로젝트</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#research">연구분야</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#skills">기술스택</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#github">GitHub</a>
+                </li>
+
+            </ul>
+
+        </div>
+
     </div>
 
-    <!-- 메인 대시보드 -->
-    <div id="main-container" class="hidden bg-white p-6 rounded-xl shadow-lg w-full max-w-2xl">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-xl font-bold">운동 기록 관리</h1>
-            <button onclick="logout()" class="text-sm text-gray-500 hover:underline">로그아웃</button>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-label">
+            COMPUTER ENGINEERING
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <label class="flex items-center space-x-2"><input type="checkbox" id="ex-1" class="w-5 h-5" onchange="saveData()"> <span>팔굽혀펴기 50회</span></label>
-            <label class="flex items-center space-x-2"><input type="checkbox" id="ex-2" class="w-5 h-5" onchange="saveData()"> <span>계단오르기</span></label>
-            <label class="flex items-center space-x-2"><input type="checkbox" id="ex-3" class="w-5 h-5" onchange="saveData()"> <span>러닝 5km</span></label>
-            <label class="flex items-center space-x-2"><input type="checkbox" id="ex-4" class="w-5 h-5" onchange="saveData()"> <span>스쿼트 50회</span></label>
+        <h1 id="typing"></h1>
+
+        <p>
+            Artificial Intelligence · Computer Vision · Defense ICT
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#projects"
+               class="btn btn-apple">
+
+                프로젝트 보기
+
+            </a>
+
+            <a href="#about"
+               class="btn btn-outline-dark btn-outline-apple">
+
+                자세히 보기
+
+            </a>
+
         </div>
 
-        <div id="calendar" class="grid grid-cols-7 gap-2 text-center text-sm">
-            <!-- 달력 생성 영역 -->
-        </div>
     </div>
 
-    <script>
-        const AUTH = { id: "user", pass: "userpass" };
-        let workoutData = JSON.parse(localStorage.getItem('myWorkoutData')) || {};
+</section>
 
-        function checkLogin() {
-            const id = document.getElementById('id-input').value;
-            const pw = document.getElementById('pw-input').value;
-            if (id === AUTH.id && pw === AUTH.pass) {
-                document.getElementById('login-container').classList.add('hidden');
-                document.getElementById('main-container').classList.remove('hidden');
-                renderCalendar();
-            } else {
-                document.getElementById('error-msg').classList.remove('hidden');
-            }
-        }
+<!-- ABOUT -->
 
-        function logout() {
-            location.reload();
-        }
+<section id="about" class="section">
 
-        function getTodayKey() {
-            return new Date().toISOString().split('T')[0];
-        }
+<div class="container hidden">
 
-        function saveData() {
-            const date = getTodayKey();
-            workoutData[date] = {
-                1: document.getElementById('ex-1').checked,
-                2: document.getElementById('ex-2').checked,
-                3: document.getElementById('ex-3').checked,
-                4: document.getElementById('ex-4').checked
-            };
-            localStorage.setItem('myWorkoutData', JSON.stringify(workoutData));
-            renderCalendar();
-        }
+    <h2 class="section-title">
+        About Me
+    </h2>
 
-        function renderCalendar() {
-            const calendar = document.getElementById('calendar');
-            calendar.innerHTML = '';
-            const now = new Date();
-            const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    <div class="row align-items-center">
 
-            for (let i = 1; i <= daysInMonth; i++) {
-                const dateKey = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-                const data = workoutData[dateKey] || {1:false, 2:false, 3:false, 4:false};
-                const completed = Object.values(data).filter(v => v).length;
-                
-                const div = document.createElement('div');
-                div.className = `p-2 rounded border ${completed === 4 ? 'bg-green-100' : 'bg-gray-50'}`;
-                div.innerHTML = `<div class="font-bold">${i}</div><div class="text-[10px]">${completed}/4</div>`;
-                calendar.appendChild(div);
-            }
-        }
+        <div class="col-lg-4 text-center">
 
-        // 초기화 시 오늘 데이터 로드
-        const todayData = workoutData[getTodayKey()] || {};
-        for(let i=1; i<=4; i++) document.getElementById(`ex-${i}`).checked = !!todayData[i];
-    </script>
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43"
+                 class="profile-image">
+
+        </div>
+
+        <div class="col-lg-8">
+
+            <div class="about-text">
+
+                <h3>미래 육군 AI 전문가</h3>
+
+                <br>
+
+                <p>
+                    컴퓨터공학을 전공하며 AI, Computer Vision,
+                    국방 ICT 기술을 연구하고 있습니다.
+                </p>
+
+                <p>
+                    장래 목표는 육군 통신병과에서
+                    AI 기반 국방혁신 업무를 추진하는 것입니다.
+                </p>
+
+                <p>
+                    감시정찰체계, 영상분석체계,
+                    지휘통제체계 및 AI 의사결정지원 분야에
+                    관심을 가지고 연구하고 있습니다.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+<!-- PROJECT -->
+
+<section id="projects" class="section projects">
+
+<div class="container hidden">
+
+<h2 class="section-title">
+프로젝트
+</h2>
+
+<div class="row g-4">
+
+<div class="col-lg-6">
+
+<div class="card project-card">
+
+<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+class="project-image card-img-top">
+
+<div class="card-body p-4">
+
+<h4>AI 사격술 교정 프로그램</h4>
+
+<p>
+YOLO와 MediaPipe를 활용하여
+사격 자세를 분석하고
+실시간 피드백을 제공하는 시스템
+</p>
+
+<span class="badge bg-primary">YOLO</span>
+<span class="badge bg-success">OpenCV</span>
+<span class="badge bg-info">MediaPipe</span>
+
+</div>
+</div>
+</div>
+
+<div class="col-lg-6">
+
+<div class="card project-card">
+
+<img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5"
+class="project-image card-img-top">
+
+<div class="card-body p-4">
+
+<h4>해안경계영상 통합 공유체계</h4>
+
+<p>
+다수의 감시장비 영상을
+실시간 통합하여 공유하는 플랫폼
+</p>
+
+<span class="badge bg-danger">Spring</span>
+<span class="badge bg-dark">Java</span>
+<span class="badge bg-success">MySQL</span>
+
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- RESEARCH -->
+
+<section id="research" class="section">
+
+<div class="container hidden">
+
+<h2 class="section-title">
+Research Interests
+</h2>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div class="research-item">
+
+<h4>Artificial Intelligence</h4>
+
+<p>
+국방 AI 의사결정 지원 연구
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="research-item">
+
+<h4>Computer Vision</h4>
+
+<p>
+실시간 객체 탐지 및 영상분석
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="research-item">
+
+<h4>Defense ICT</h4>
+
+<p>
+감시정찰 및 지휘통제체계 연구
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- SKILLS -->
+
+<section id="skills" class="section">
+
+<div class="container hidden">
+
+<h2 class="section-title">
+Technical Skills
+</h2>
+
+<div class="skill-box">
+
+Python
+
+<div class="progress">
+
+<div class="progress-bar"
+style="width:95%">
+</div>
+
+</div>
+
+</div>
+
+<div class="skill-box">
+
+Computer Vision
+
+<div class="progress">
+
+<div class="progress-bar bg-success"
+style="width:90%">
+</div>
+
+</div>
+
+</div>
+
+<div class="skill-box">
+
+Defense ICT
+
+<div class="progress">
+
+<div class="progress-bar bg-danger"
+style="width:85%">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- GITHUB -->
+
+<section id="github" class="section github">
+
+<div class="container hidden">
+
+<div class="github-card text-center">
+
+<h2>
+GitHub Repository
+</h2>
+
+<p class="mt-3">
+프로젝트 소스코드 및 연구자료
+</p>
+
+<a href="#"
+class="btn btn-dark btn-lg">
+
+<i class="bi bi-github"></i>
+
+GitHub 방문
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="text-center">
+
+<p>
+© 2026 AI Defense Portfolio
+</p>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+/* 타이핑 효과 */
+
+const text =
+"AI로 국방의 미래를 설계합니다.";
+
+let i = 0;
+
+function typing(){
+
+    if(i < text.length){
+
+        document
+        .getElementById("typing")
+        .innerHTML += text.charAt(i);
+
+        i++;
+
+        setTimeout(typing,70);
+    }
+}
+
+typing();
+
+/* 스크롤 애니메이션 */
+
+const observer =
+new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+});
+
+});
+
+document
+.querySelectorAll(".hidden")
+.forEach(el=>observer.observe(el));
+
+</script>
+
 </body>
 </html>
